@@ -339,10 +339,6 @@ Cache roots are resolved per-user via the `cache_directory` map at the top of `r
 
 ---
 
-## License
-
-[Add your license — e.g. MIT / Apache-2.0]
-
 ## Acknowledgments
 
 Built on [pypdfium2](https://github.com/pypdfium2-team/pypdfium2), [sentence-transformers](https://github.com/UKPLab/sentence-transformers), [transformers](https://github.com/huggingface/transformers), and the [Qwen](https://huggingface.co/Qwen) vision-language model family.
