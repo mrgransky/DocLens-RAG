@@ -2,7 +2,7 @@
 
 # 🔍 DocLens-RAG
 
-### Visual Retrieval-Augmented Generation for Complex Financial PDFs
+### Visual Retrieval-Augmented Generation for Complex PDFs
 
 **Read the page, don't parse the text.**
 
