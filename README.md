@@ -351,6 +351,6 @@ Built on [pypdfium2](https://github.com/pypdfium2-team/pypdfium2), [sentence-tra
 
 <div align="center">
 
-*If DocLens-RAG helps your research or product, consider starring ⭐ the repo.*
+*If DocLens-RAG helps your research or product, consider starring the repo.*
 
 </div>
