@@ -17,7 +17,7 @@
 
 ## Overview
 
-**DocLens-RAG** is a vision-first RAG pipeline for financial reports and other layout-heavy PDFs. Instead of extracting text and chopping it into chunks, it **renders each PDF page as an image**, indexes those images with a **vision-language embedding model**, retrieves the most relevant pages, and hands them to a **vision-language model (VLM)** to produce a cited answer.
+**DocLens-RAG** is a vision-first RAG pipeline for reports and layout-heavy PDFs. Instead of extracting text and chopping it into chunks, it **renders each PDF page as an image**, indexes those images with a **vision-language embedding model**, retrieves the most relevant pages, and hands them to a **vision-language model (VLM)** to produce a cited answer.
 
 ```
 PDFs ─▶ page images ─▶ VL embeddings ─▶ ranking ─▶ VLM ─▶ cited answer
