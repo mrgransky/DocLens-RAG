@@ -130,6 +130,43 @@ Set your Hugging Face token if you use gated models:
 export HUGGINGFACE_TOKEN=hf_xxx
 ```
 
+## Dataset
+
+DocLens-RAG includes a helper script to download a starter corpus of public automotive financial reports (BMW, Tesla, and Ford 10-Ks/Annual Reports). 
+
+```bash
+# 1. Make the script executable
+chmod +x download_auto_financials.sh
+
+# 2. Download the dataset (defaults to ./automotive_finance)
+./download_auto_financials.sh
+
+# Or specify a custom directory
+./download_auto_financials.sh /path/to/my/pdfs
+```
+
+This will create a structured directory containing ~9 large, layout-heavy PDFs:
+```text
+automotive_finance/
+├── BMW/
+│   ├── BMW_Group_Report_2023.pdf
+│   ├── BMW_Group_Report_2024.pdf
+│   └── BMW_Group_Report_2025.pdf
+├── Ford/
+│   ├── Ford_Annual_Report_31_12_2023.pdf
+│   ├── Ford_Annual_Report_31_12_2024.pdf
+│   └── Ford_Annual_Report_31_12_2025.pdf
+└── Tesla/
+    ├── Tesla_10-K_31_12_2023.pdf
+    ├── Tesla_10-K_31_12_2024.pdf
+    └── Tesla_10-K_31_12_2025.pdf
+```
+
+Once downloaded, you can immediately test the RAG pipeline against it:
+```bash
+python run.py -d ./automotive_finance -vlm "Qwen/Qwen3.5-0.8B" -emb "Qwen/Qwen3-VL-Embedding-2B" -v
+```
+
 ---
 
 ## Quick Start
