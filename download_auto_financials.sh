@@ -96,6 +96,15 @@ download "$BASE_DIR/Ford/Ford_Annual_Report_31_12_2024.pdf" \
 download "$BASE_DIR/Ford/Ford_Annual_Report_31_12_2025.pdf" \
 "https://d18rn0p25nwr6d.cloudfront.net/CIK-0000037996/34de982b-4464-440c-b0a8-7e1b7a0e02b9.pdf" pdf
 
+
+echo "----------------------------------------"
+echo "Dataset Summary:"
+du -sh "$BASE_DIR"/* | awk '{print "  " $2 ": " $1}'
+TOTAL_SIZE=$(du -sh "$BASE_DIR" | awk '{print $1}')
+TOTAL_FILES=$(find "$BASE_DIR" -type f -name "*.pdf" | wc -l)
+echo "  Total: $TOTAL_FILES PDFs ($TOTAL_SIZE)"
+echo "----------------------------------------"
+
 echo
 echo "Download complete."
 if [[ -s "$LOG_FILE" ]]; then

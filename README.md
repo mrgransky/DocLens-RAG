@@ -92,16 +92,16 @@ DocLens-RAG keeps the source appearance intact:
 
 ## Features
 
-- 🖼️ **Visual page-level indexing** — no text chunking, no extraction noise
-- 🧩 **Optional tile/strip indexing** for fine-grained retrieval on dense pages
-- 🔀 **Hybrid retrieval** — BM25 (native text layer) + RRF fusion for exact-value queries
-- 🎯 **Optional VL cross-encoder reranker** (`Qwen3-VL-Reranker-2B`)
-- 📐 **Token-budget-aware prompting** — drops lowest-ranked pages until the prompt fits
-- 📎 **Provenance headers** — every page carries source, company, entity, year, and page number for citation
-- 📊 **Built-in evaluation harness** — hit@k, MRR, and answer-exactness, broken down by category
-- ⚡ **Resumable + cached indexing** — per-document render cache, fingerprint-keyed embedding cache, partial-file resume
-- 💾 **4-bit quantization** (`--load_in_4bit`) and **Flash Attention → SDPA** auto-fallback
-- 💬 **Multi-turn chat** with rolling history (images are not re-sent)
+- **Visual page-level indexing** — no text chunking, no extraction noise
+- **Optional tile/strip indexing** for fine-grained retrieval on dense pages
+- **Hybrid retrieval** — BM25 (native text layer) + RRF fusion for exact-value queries
+- **Optional VL cross-encoder reranker** (`Qwen3-VL-Reranker-2B`)
+- **Token-budget-aware prompting** — drops lowest-ranked pages until the prompt fits
+- **Provenance headers** — every page carries source, company, entity, year, and page number for citation
+- **Built-in evaluation harness** — hit@k, MRR, and answer-exactness, broken down by category
+- **Resumable + cached indexing** — per-document render cache, fingerprint-keyed embedding cache, partial-file resume
+- **4-bit quantization** (`--load_in_4bit`) and **Flash Attention → SDPA** auto-fallback
+- **Multi-turn chat** with rolling history (images are not re-sent)
 
 ---
 
