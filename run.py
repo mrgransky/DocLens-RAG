@@ -1,6 +1,6 @@
 
+# running on Roihu:
 # python run.py -d /scratch/project_2004072/datasets/automotive_finance -vlm "Qwen/Qwen3.8-27B" -emb "Qwen/Qwen3-VL-Embedding-8B" --dpi 200 -bs 16 -v
-
 
 """
 run.py — ReportVision-RAG
@@ -47,9 +47,6 @@ from rich.progress import track
 import transformers as tfs
 from sentence_transformers import SentenceTransformer
 
-# ---------------------------------------------------------------------------
-# Normalize kwargs patch (kept from finrag.py)
-# ---------------------------------------------------------------------------
 try:
 	from sentence_transformers.sentence_transformer.modules import Normalize
 except ImportError:
@@ -66,9 +63,6 @@ if not getattr(Normalize, "_rogue_kwargs_patched", False):
 	Normalize.__init__ = _patched_norm_init
 	Normalize._rogue_kwargs_patched = True
 
-# ---------------------------------------------------------------------------
-# Config
-# ---------------------------------------------------------------------------
 cache_directory = {
 	"farid": "/home/farid/datasets/models",
 	"alijanif": "/scratch/project_2004072/models",
@@ -116,9 +110,6 @@ EVIDENCE AND ACCURACY RULES
     If only some parts are supported, answer those and state which parts are unavailable.
 """
 
-# ---------------------------------------------------------------------------
-# Generic helpers
-# ---------------------------------------------------------------------------
 def get_user_cache_dir() -> str:
 	return cache_directory.get(os.getenv("USER"), os.getcwd())
 
@@ -214,7 +205,7 @@ def get_model_kwargs(verbose: bool = False):
 	return attention, dtype
 
 # ---------------------------------------------------------------------------
-# 1) Rendering (pypdfium2) — shared across embedding models
+# Rendering (pypdfium2) — shared across embedding models
 # ---------------------------------------------------------------------------
 def render_corpus(
 	data_dir: str,
@@ -325,7 +316,7 @@ def load_page_image(page: Dict[str, Any], max_pixels: int, bbox: Optional[List[i
 	return fit_to_pixel_budget(img, max_pixels)
 
 # ---------------------------------------------------------------------------
-# 2) Index units: whole pages and/or overlapping horizontal strips
+# Index units: whole pages and/or overlapping horizontal strips
 # ---------------------------------------------------------------------------
 def build_units(pages: List[Dict[str, Any]], index_mode: str, tile_rows: int, tile_overlap: float):
 	units = []
@@ -345,7 +336,7 @@ def build_units(pages: List[Dict[str, Any]], index_mode: str, tile_rows: int, ti
 	return units
 
 # ---------------------------------------------------------------------------
-# 3) VL embedding model (sentence-transformers multimodal)
+# VL embedding model (sentence-transformers multimodal)
 # ---------------------------------------------------------------------------
 def _has_internal_normalize(m) -> bool:
 	return hasattr(m, "modules") and any(isinstance(mod, Normalize) for mod in m.modules())
@@ -486,7 +477,7 @@ def get_visual_index(args):
 	return embedder, pages, units, embeddings
 
 # ---------------------------------------------------------------------------
-# 4) Optional lexical path (BM25 over native PDF text layer) for exact-value queries
+# Optional lexical path (BM25 over native PDF text layer) for exact-value queries
 # ---------------------------------------------------------------------------
 _TOKEN_RE = re.compile(r"[A-Za-z]+|\d+(?:[.,]\d+)*")
 
@@ -531,7 +522,7 @@ def load_reranker(model_id: str):
 	)
 
 # ---------------------------------------------------------------------------
-# 6) Retrieval: units -> pages (max-pool), optional RRF fusion, optional rerank
+# Retrieval: units -> pages (max-pool), optional RRF fusion, optional rerank
 # ---------------------------------------------------------------------------
 def retrieve_pages(query, embedder, embeddings, units, pages, args,
 									 bm25: Optional[BM25] = None, reranker=None, k: Optional[int] = None) -> List[Dict[str, Any]]:
@@ -611,9 +602,6 @@ def show_retrieval(retrieved, pages, n_sent: Optional[int] = None, verbose: bool
 				)
 			)
 
-# ---------------------------------------------------------------------------
-# 7) VLM
-# ---------------------------------------------------------------------------
 def get_vlm(model_id: str, load_in_4bit: bool = False):
 	attention, dtype = get_model_kwargs()
 	common = {"trust_remote_code": True, "token": os.getenv("HUGGINGFACE_TOKEN"), "cache_dir": get_user_cache_dir()}
@@ -692,7 +680,7 @@ def generate_answer(processor, vlm, query, history, retrieved, pages, args) -> T
 	return clean_response(answer), n_sent, n_tokens
 
 # ---------------------------------------------------------------------------
-# 8) Evaluation
+# Evaluation
 #   JSONL lines: {"question": "...", "relevant": [{"source": "Ford_Annual_Report_2023.pdf", "page": 54}],
 #                 "answer": "optional expected string", "category": "table|chart|text|mixed"}
 # ---------------------------------------------------------------------------
